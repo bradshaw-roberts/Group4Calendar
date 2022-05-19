@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.calendar.CalendarController">
+
+    <HBox alignment="BOTTOM_CENTER">
+        <Label text="Month view"/>
+        <Button text="Add New Event" onAction="#toAddMenu"/>
+        <Button text="Edit Event" onAction="#toEditMenu"/>
+    </HBox>
+
+    <VBox>
+        <Label text="To Do List"/>
+    </VBox>
+
+</HBox>
