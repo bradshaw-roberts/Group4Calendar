@@ -1,5 +1,6 @@
 package com.example.calendar;
 
+import java.time.LocalDate;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,6 +19,10 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+
+      //gets today's date: default format is "YYYY-MM-DD"
+      LocalDate dateToday = LocalDate.now();  
+      
+      launch();
     }
 }
