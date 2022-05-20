@@ -1,19 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.calendar.CalendarController">
 
-    <HBox alignment="BOTTOM_CENTER">
-        <Label text="Month view"/>
-        <Button text="Add New Event" onAction="#toAddMenu"/>
-        <Button text="Edit Event" onAction="#toEditMenu"/>
-    </HBox>
-
-    <VBox>
-        <Label text="To Do List"/>
-    </VBox>
-
-</HBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.763167388167388" prefHeight="486.0" prefWidth="1110.0">
+        <items>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <TabPane prefHeight="429.0" prefWidth="427.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Day">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="384.0" prefWidth="427.0">
+                                 <children>
+                                    <HBox prefHeight="34.0" prefWidth="843.0">
+                                       <children>
+                                          <Label prefHeight="32.0" prefWidth="28.0" text="Date">
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                          <DatePicker>
+                                             <HBox.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </HBox.margin>
+                                          </DatePicker>
+                                       </children>
+                                    </HBox>
+                                    <GridPane layoutX="1.0" layoutY="44.0" prefHeight="358.0" prefWidth="843.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="127.39999389648438" minWidth="10.0" prefWidth="83.4000015258789" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.999951171875" minWidth="10.0" prefWidth="158.3999755859375" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="441.6000244140625" minWidth="10.0" prefWidth="441.6000244140625" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="291.20001220703125" minWidth="10.0" prefWidth="124.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="253.4" minHeight="10.0" prefHeight="33.80003204345704" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="351.99996795654295" minHeight="5.400000000000006" prefHeight="351.99996795654295" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Label text="Time">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Title" GridPane.columnIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Label" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Description/Notes" GridPane.columnIndex="2">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Location" GridPane.columnIndex="3">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Label" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                             <GridPane.margin>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Week">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </Tab>
+                        <Tab text="Month">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
+                    </tabs>
+                  </TabPane>
+                  <ButtonBar prefHeight="50.0" prefWidth="427.0">
+                    <buttons>
+                      <Button fx:id="addEventButton" mnemonicParsing="false" text="Add" />
+                        <Button fx:id="editEventButton" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="removeEventButton" mnemonicParsing="false" text="Remove" />
+                    </buttons>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </ButtonBar>
+               </children>
+            </VBox>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="337.0" prefWidth="338.0">
+               <children>
+                  <VBox prefHeight="484.0" prefWidth="247.0" />
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <Label text="To Do List" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </top>
+                     <bottom>
+                        <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <buttons>
+                            <Button fx:id="addToDoButton" mnemonicParsing="false" text="Add New To Do List Item" />
+                          </buttons>
+                        </ButtonBar>
+                     </bottom>
+                     <center>
+                        <Label text="items" BorderPane.alignment="TOP_LEFT">
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </center>
+                  </BorderPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
