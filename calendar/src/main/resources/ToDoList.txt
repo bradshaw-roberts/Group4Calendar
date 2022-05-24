@@ -3,4 +3,4 @@ two
 three
 four
 
-test github
+test github 1 2
