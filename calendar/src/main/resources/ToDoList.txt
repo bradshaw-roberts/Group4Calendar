@@ -2,5 +2,3 @@ one
 two
 three
 four
-
-test github 1 2
