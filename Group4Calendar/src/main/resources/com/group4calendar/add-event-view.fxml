@@ -15,7 +15,7 @@
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calendar.AddEventController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group4calendar.AddEventController">
    <children>
       <VBox layoutY="-6.0" prefHeight="365.0" prefWidth="728.0" spacing="20.0">
          <children>

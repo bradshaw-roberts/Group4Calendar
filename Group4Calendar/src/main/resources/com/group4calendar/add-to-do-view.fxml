@@ -7,11 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calendar.RemoveToDoController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="135.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group4calendar.AddToDoController">
    <children>
       <VBox prefHeight="135.0" prefWidth="310.0">
          <children>
-            <Label text="Enter the name of the item to be removed">
+            <Label text="Enter the name of the item you want to add">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
@@ -21,7 +22,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>
             </TextField>
-            <Button fx:id="newToDoListItemSubmitButton" mnemonicParsing="false" onAction="#onRemoveToDoListItemSubmitButtonClick" text="Submit">
+            <Button fx:id="newToDoListItemSubmitButton" mnemonicParsing="false" text="Submit" onAction="#onAddToDoListItemSubmitButtonClick">
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </VBox.margin>

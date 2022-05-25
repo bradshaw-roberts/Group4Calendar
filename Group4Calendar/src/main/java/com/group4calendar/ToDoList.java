@@ -1,8 +1,8 @@
-package com.example.calendar;
+package com.group4calendar;
 
 import java.io.*;
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ToDoList {
 

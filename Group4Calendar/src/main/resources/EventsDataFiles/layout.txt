@@ -1,11 +1,13 @@
+
+----------
 Title
 Start Time
 End Time
 Location
 Description/Notes
-
+----------
 Work
-0900
-1700
+09:00 AM
+02:00 PM
 The Office
 Just another day at the office.

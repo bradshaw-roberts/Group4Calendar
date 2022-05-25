@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calendar.CalendarController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group4calendar.CalendarController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="1110.0">
          <children>
@@ -45,9 +45,9 @@
                                           </HBox>
                                           <TableView fx:id="dayTableView" layoutY="43.0" prefHeight="359.0" prefWidth="854.0">
                                             <columns>
-                                              <TableColumn fx:id="startTimeDayTableColumn" prefWidth="75.0" text="Start Time" />
+                                                <TableColumn fx:id="startTimeDayTableColumn" prefWidth="75.0" text="Start Time" />
                                                 <TableColumn fx:id="endTimeDayTableColumn" prefWidth="75.0" text="End Time" />
-                                              <TableColumn fx:id="titleDayTableColumn" prefWidth="209.60006713867188" text="Title" />
+                                                <TableColumn fx:id="titleDayTableColumn" prefWidth="209.60006713867188" text="Title" />
                                                 <TableColumn fx:id="notesDayTableColumn" prefWidth="308.79998779296875" text="Notes/Description" />
                                                 <TableColumn fx:id="locationDayTableColumn" prefWidth="184.0" text="Location" />
                                             </columns>
@@ -96,8 +96,8 @@
                                 <buttons>
                                     <AnchorPane prefHeight="54.0" prefWidth="257.0">
                                        <children>
-                                        <Button fx:id="addToDoButton" layoutY="14.0" mnemonicParsing="false" onAction="#onAddToDoButtonClick" text="Add To Do List Item" />
-                                          <Button fx:id="removeToDoButton" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRemoveToDoButtonClick" text="Remove Item" />
+                                           <Button fx:id="addToDoButton" layoutY="14.0" mnemonicParsing="false" onAction="#onAddToDoButtonClick" text="Add To Do List Item" />
+                                           <Button fx:id="removeToDoButton" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRemoveToDoButtonClick" text="Remove Item" />
                                        </children>
                                     </AnchorPane>
                                 </buttons>
@@ -106,7 +106,7 @@
                            <center>
                               <TableView fx:id="toDoListTableView" prefHeight="367.0" prefWidth="260.0" BorderPane.alignment="CENTER">
                                 <columns>
-                                  <TableColumn fx:id="toDoListTableColumn" prefWidth="259.19997560977936" text="Items" />
+                                  <TableColumn fx:id="toDoListTableColumn" prefWidth="260.0" text="Items" />
                                 </columns>
                               </TableView>
                            </center>

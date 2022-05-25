@@ -1,11 +1,11 @@
-package com.example.calendar;
+package com.group4calendar;
 
 public class ToDoListItem {
-    private static String itemName;
+    private String itemName;
 
     public ToDoListItem(String itemName) {this.itemName = itemName;}
 
-    public String getItemName () {return itemName;}
+    public String getItemName() {return itemName;}
 
     public void setItemName(String itemName) {this.itemName = itemName;}
 }

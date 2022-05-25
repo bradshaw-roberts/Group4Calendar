@@ -1,4 +1,4 @@
-package com.example.calendar;
+package com.group4calendar;
 
 public class Event {
     private String title, location, notes, date, startTime, endTime;
@@ -17,7 +17,7 @@ public class Event {
     }
 
     public String toStringForFile() {
-        return title + "\n" + startTime + "\n" + endTime + "\n" + location + "\n" + notes + "\n";
+        return title + "\n" + startTime + "\n" + endTime + "\n" + location + "\n" + notes;
     }
 
     //getters

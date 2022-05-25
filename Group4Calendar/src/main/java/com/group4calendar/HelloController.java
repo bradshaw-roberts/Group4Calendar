@@ -1,4 +1,4 @@
-package com.example.calendar;
+package com.group4calendar;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

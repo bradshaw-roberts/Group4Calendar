@@ -1,10 +1,9 @@
-package com.example.calendar;
+package com.group4calendar;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -20,38 +20,57 @@ public class CalendarController implements Initializable  {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        toDoListTableView_ = toDoListTableView;
+        toDoListTableColumn.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+
+        dayTableView_ = dayTableView;
+
+        startTimeDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endTimeDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        titleDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        notesDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
+        locationDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+
         try {
             updateToDoList();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
-        updateDayView("2022-05-23");
+        LocalDate dateToday = LocalDate.now();
 
-        toDoListTableColumn.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        try {
+            updateDayView(dateToday.toString());
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
 
     //to do list stuff
-    @FXML public TableView toDoListTableView = new TableView();
-    @FXML public TableColumn<ToDoListItem, String> toDoListTableColumn = new TableColumn<>("Items");
+    @FXML private TableView toDoListTableView = new TableView();
+    private static TableView toDoListTableView_;
 
-    public void updateToDoList() throws FileNotFoundException {
-        ArrayList<String> toDoListItems = ToDoList.getAll();
+    @FXML private TableColumn<ToDoListItem, String> toDoListTableColumn = new TableColumn<>("Items");
 
-        for ( int i = 0; i < toDoListTableView.getItems().size(); i++) {
-            toDoListTableView.getItems().clear();
+    public static void updateToDoList() throws FileNotFoundException {
+        ArrayList<String> currentToDoListItems = ToDoList.getAll();
+
+        for (int i = 0; i < currentToDoListItems.size(); i++) {
+            toDoListTableView_.getItems().clear();
         }
 
-        for (String item : toDoListItems) {
-            toDoListTableView.getItems().add(new ToDoListItem(item));
+        for (String item : currentToDoListItems) {
+            toDoListTableView_.getItems().add(new ToDoListItem(item));
         }
     }
 
     public static Stage newWindow;
 
-    public static void closeNewWindow() {newWindow.close();}
+    public static void closeNewWindow() {
+        newWindow.close();
+    }
 
     public void onAddToDoButtonClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("add-to-do-view.fxml"));
@@ -65,6 +84,7 @@ public class CalendarController implements Initializable  {
         newWindow.setY(250);
 
         newWindow.show();
+        updateToDoList();
     }
 
     public void onRemoveToDoButtonClick() throws IOException {
@@ -84,44 +104,41 @@ public class CalendarController implements Initializable  {
 
 
     //for testing
-    Event event1 = new Event("one", "2022-05-23", "01:00 AM", "01:00 PM", "loc1", "note1");
-    Event event2 = new Event("two", "2022-05-23", "02:00 AM", "02:00 PM", "loc2", "note2");
-    Event event3 = new Event("three", "2022-05-23", "03:00 AM", "03:00 PM", "loc3", "note3");
-    Event noon = new Event("noon", "2022-05-23", "12:00 AM", "12:00 PM", "locNoon", "noteNoon");
+    static Event event1 = new Event("one", "2022-05-23", "01:00 AM", "01:00 PM", "loc1", "note1");
+    static Event event2 = new Event("two", "2022-05-23", "02:00 AM", "02:00 PM", "loc2", "note2");
+    static Event event3 = new Event("three", "2022-05-23", "03:00 AM", "03:00 PM", "loc3", "note3");
+    static Event noon = new Event("noon", "2022-05-23", "12:00 AM", "12:00 PM", "locNoon", "noteNoon");
 
 
     //calendar stuff
-    @FXML TableView dayTableView = new TableView();
+    @FXML private TableView dayTableView = new TableView();
+    private static TableView dayTableView_ = new TableView();
 
-    @FXML TableColumn<Event, String> titleDayTableColumn = new TableColumn<>();
-    @FXML TableColumn<Event, String> startTimeDayTableColumn = new TableColumn<>();
-    @FXML TableColumn<Event, String> endTimeDayTableColumn = new TableColumn<>();
-    @FXML TableColumn<Event, String> notesDayTableColumn = new TableColumn<>();
-    @FXML TableColumn<Event, String> locationDayTableColumn = new TableColumn<>();
+    @FXML private TableColumn<Event, String> titleDayTableColumn = new TableColumn<>();
+    @FXML private TableColumn<Event, String> startTimeDayTableColumn = new TableColumn<>();
+    @FXML private TableColumn<Event, String> endTimeDayTableColumn = new TableColumn<>();
+    @FXML private TableColumn<Event, String> notesDayTableColumn = new TableColumn<>();
+    @FXML private TableColumn<Event, String> locationDayTableColumn = new TableColumn<>();
 
-    public ArrayList<Event> events = new ArrayList<>();
+    private static ArrayList<Event> events = new ArrayList<>();
 
-    public void updateDayView(String date) {
+    public static void updateDayView(String date) throws FileNotFoundException {
         //for testing
         events.add(event1);
         events.add(event2);
         events.add(event3);
         events.add(noon);
 
+        ArrayList<Event> events = GetData.getAllEventsForDay(date);
+
         sortEvents(events);
 
-        startTimeDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endTimeDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        titleDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        notesDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
-        locationDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-
-        for ( int i = 0; i < dayTableView.getItems().size(); i++) {
-            dayTableView.getItems().clear();
+        for (int i = 0; i < dayTableView_.getItems().size(); i++) {
+            dayTableView_.getItems().clear();
         }
 
         for (Event event : events) {
-            dayTableView.getItems().add(event);
+            dayTableView_.getItems().add(event);
         }
     }
 
@@ -133,7 +150,7 @@ public class CalendarController implements Initializable  {
 
     }
 
-    public void sortEvents (ArrayList<Event> events) {
+    public static void sortEvents (ArrayList<Event> events) {
         //sortEventsByDate(events);
         sortEventsByStartTime(events, 0, events.size() - 1);
     }
@@ -154,7 +171,7 @@ public class CalendarController implements Initializable  {
         }
     }
 
-    private void sortEventsByStartTime(ArrayList<Event> events, int begin, int end) {
+    private static void sortEventsByStartTime(ArrayList<Event> events, int begin, int end) {
         if (begin >= end) {return;}
         int middle = (begin + end) / 2;
         sortEventsByStartTime(events, begin, middle);
@@ -162,7 +179,7 @@ public class CalendarController implements Initializable  {
         sortEventsByStartTimeMergeHalves(events, begin, middle, end);
     }
 
-    private void sortEventsByStartTimeMergeHalves(ArrayList<Event> events, int left, int middle, int right) {
+    private static void sortEventsByStartTimeMergeHalves(ArrayList<Event> events, int left, int middle, int right) {
         int subArrayOne = middle - left + 1;
         int subArrayTwo = right - middle;
 
