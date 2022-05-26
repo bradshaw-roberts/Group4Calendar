@@ -65,11 +65,11 @@ public class AddEventController {
 
         endTime += " " + addEventEndTimeAMPMChoiceBox.getValue();
 
-        Event event = new Event(addEventTitleTextField.getText(), addEventDateInput.getValue().toString(), startTime, endTime, addEventLocationTextField.getText(), addEventNotesTextArea.getText());
+        Event event = new Event(addEventTitleTextField.getText(), addEventDateInput.getValue().toString(), addEventDateInput.getValue().getDayOfWeek().toString(), startTime, endTime, addEventLocationTextField.getText(), addEventNotesTextArea.getText());
 
         GetData.addEvent(event);
 
-        CalendarController.updateDayView("2022-05-01");
+        CalendarController.updateDayView(CalendarController.dayDisplayDate);
 
         CalendarController.closeNewWindow();
     }

@@ -9,7 +9,6 @@ import java.io.IOException;
 public class RemoveToDoController {
 
     @FXML private TextField newToDoListItemTextField = new TextField();
-    @FXML private Button newToDoListItemSubmitButton = new Button();
 
     public void onRemoveToDoListItemSubmitButtonClick() throws IOException {
         ToDoList.removeItem(newToDoListItemTextField.getText());

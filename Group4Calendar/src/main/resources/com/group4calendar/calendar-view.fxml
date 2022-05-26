@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -36,7 +37,7 @@
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </HBox.margin>
                                                 </Label>
-                                                <DatePicker onAction="#dayViewDatePicked">
+                                                <DatePicker fx:id="dayDatePicker" onAction="#dayViewDatePicked">
                                                    <HBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </HBox.margin>
@@ -96,15 +97,36 @@
                                 <buttons>
                                     <AnchorPane prefHeight="54.0" prefWidth="257.0">
                                        <children>
-                                           <Button fx:id="addToDoButton" layoutY="14.0" mnemonicParsing="false" onAction="#onAddToDoButtonClick" text="Add To Do List Item" />
-                                           <Button fx:id="removeToDoButton" layoutX="157.0" layoutY="14.0" mnemonicParsing="false" onAction="#onRemoveToDoButtonClick" text="Remove Item" />
+                                          <VBox layoutX="-7.0" prefHeight="70.0" prefWidth="254.0">
+                                             <children>
+                                                <TextField fx:id="toDoListTextField" prefHeight="26.0" prefWidth="242.0" promptText="Enter Item Here">
+                                                   <VBox.margin>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </TextField>
+                                                <HBox prefHeight="39.0" prefWidth="247.0">
+                                                   <children>
+                                                       <Button fx:id="addToDoButton" mnemonicParsing="false" onAction="#onAddToDoButtonClick" text="Add To Do List Item">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                       <Button fx:id="removeToDoButton" mnemonicParsing="false" onAction="#onRemoveToDoButtonClick" prefWidth="110.0" text="Remove Item">
+                                                         <HBox.margin>
+                                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </AnchorPane>
                                 </buttons>
                               </ButtonBar>
                            </bottom>
                            <center>
-                              <TableView fx:id="toDoListTableView" prefHeight="367.0" prefWidth="260.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="toDoListTableView" prefHeight="314.0" prefWidth="260.0" BorderPane.alignment="CENTER">
                                 <columns>
                                   <TableColumn fx:id="toDoListTableColumn" prefWidth="260.0" text="Items" />
                                 </columns>

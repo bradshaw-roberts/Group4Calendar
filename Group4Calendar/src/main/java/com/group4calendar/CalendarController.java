@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -17,6 +19,12 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CalendarController implements Initializable  {
+
+    public static LocalDate dayDisplayDate;
+
+    @FXML DatePicker dayDatePicker = new DatePicker();
+
+    @FXML private TextField toDoListTextField = new TextField();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -38,9 +46,11 @@ public class CalendarController implements Initializable  {
         }
 
         LocalDate dateToday = LocalDate.now();
+        dayDisplayDate = dateToday;
+        dayDatePicker.setValue(dateToday);
 
         try {
-            updateDayView(dateToday.toString());
+            updateDayView(dayDisplayDate);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -73,41 +83,48 @@ public class CalendarController implements Initializable  {
     }
 
     public void onAddToDoButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("add-to-do-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 309, 135);
+//        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("add-to-do-view.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 309, 135);
+//
+//        newWindow = new Stage();
+//        newWindow.setTitle("Add To Do List Item");
+//        newWindow.setScene(scene);
+//
+//        newWindow.setX(500);
+//        newWindow.setY(250);
+//
+//        newWindow.show();
+//        updateToDoList();
 
-        newWindow = new Stage();
-        newWindow.setTitle("Add To Do List Item");
-        newWindow.setScene(scene);
+        ToDoList.addItem(toDoListTextField.getText());
 
-        newWindow.setX(500);
-        newWindow.setY(250);
+        toDoListTextField.clear();
 
-        newWindow.show();
-        updateToDoList();
+        CalendarController.updateToDoList();
     }
 
     public void onRemoveToDoButtonClick() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("remove-to-do-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 309, 135);
+//        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("remove-to-do-view.fxml"));
+//        Scene scene = new Scene(fxmlLoader.load(), 309, 135);
+//
+//        newWindow = new Stage();
+//        newWindow.setTitle("Remove To Do List Item");
+//        newWindow.setScene(scene);
+//
+//        newWindow.setX(500);
+//        newWindow.setY(250);
+//
+//        newWindow.show();
 
-        newWindow = new Stage();
-        newWindow.setTitle("Remove To Do List Item");
-        newWindow.setScene(scene);
+        ToDoList.removeItem(toDoListTextField.getText());
 
-        newWindow.setX(500);
-        newWindow.setY(250);
+        toDoListTextField.clear();
 
-        newWindow.show();
+        CalendarController.updateToDoList();
     }
 
 
 
-    //for testing
-    static Event event1 = new Event("one", "2022-05-23", "01:00 AM", "01:00 PM", "loc1", "note1");
-    static Event event2 = new Event("two", "2022-05-23", "02:00 AM", "02:00 PM", "loc2", "note2");
-    static Event event3 = new Event("three", "2022-05-23", "03:00 AM", "03:00 PM", "loc3", "note3");
-    static Event noon = new Event("noon", "2022-05-23", "12:00 AM", "12:00 PM", "locNoon", "noteNoon");
 
 
     //calendar stuff
@@ -122,14 +139,9 @@ public class CalendarController implements Initializable  {
 
     private static ArrayList<Event> events = new ArrayList<>();
 
-    public static void updateDayView(String date) throws FileNotFoundException {
-        //for testing
-        events.add(event1);
-        events.add(event2);
-        events.add(event3);
-        events.add(noon);
+    public static void updateDayView(LocalDate date) throws FileNotFoundException {
 
-        ArrayList<Event> events = GetData.getAllEventsForDay(date);
+        ArrayList<Event> events = GetData.getAllEventsForDay(date, new ArrayList<>());
 
         sortEvents(events);
 
@@ -251,7 +263,8 @@ public class CalendarController implements Initializable  {
 
     }
 
-    public void dayViewDatePicked() throws IOException {
-
+    public void dayViewDatePicked() throws FileNotFoundException {
+        dayDisplayDate = dayDatePicker.getValue();
+        updateDayView(dayDisplayDate);
     }
 }

@@ -9,7 +9,6 @@ import java.io.IOException;
 public class AddToDoController {
 
     @FXML private TextField newToDoListItemTextField = new TextField();
-    @FXML private Button newToDoListItemSubmitButton = new Button();
 
     public void onAddToDoListItemSubmitButtonClick() throws IOException {
         ToDoList.addItem(newToDoListItemTextField.getText());

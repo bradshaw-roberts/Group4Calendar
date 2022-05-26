@@ -1,15 +1,16 @@
 package com.group4calendar;
 
 public class Event {
-    private String title, location, notes, date, startTime, endTime;
+    private String title, location, notes, date, dayOfTheWeek, startTime, endTime;
 
     //default constructor
     public Event() { }
 
     //input all variables
-    public Event(String title, String date, String startTime, String endTime, String location, String notes)  {
+    public Event(String title, String date, String dayOfTheWeek, String startTime, String endTime, String location, String notes)  {
         this.title = title;
         this.date = date;
+        this.dayOfTheWeek = dayOfTheWeek;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
@@ -17,12 +18,13 @@ public class Event {
     }
 
     public String toStringForFile() {
-        return title + "\n" + startTime + "\n" + endTime + "\n" + location + "\n" + notes;
+        return title + "\n" + dayOfTheWeek + "\n" + startTime + "\n" + endTime + "\n" + location + "\n" + notes;
     }
 
     //getters
     public String getTitle() {return title;}
     public String getDate() {return date;}
+    public String getDayOfTheWeek() {return dayOfTheWeek;}
     public String getStartTime() {return startTime;}
     public String getEndTime() {return endTime;}
     public String getLocation() {return location;}
@@ -113,4 +115,5 @@ public class Event {
     public void setStartTime(String newStartTime) {this.startTime = newStartTime;}
     public void setEndTime(String newEndTime) {this.endTime = newEndTime;}
     public void setDate(String newDate) {this.date = newDate;}
+    public void setDayOfTheWeek(String newDayOfTheWeek) {this.dayOfTheWeek = newDayOfTheWeek;}
 }
