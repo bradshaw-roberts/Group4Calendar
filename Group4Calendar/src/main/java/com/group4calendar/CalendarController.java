@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -16,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.ResourceBundle;
 
 public class CalendarController implements Initializable  {
@@ -23,6 +22,8 @@ public class CalendarController implements Initializable  {
     public static LocalDate dayDisplayDate;
 
     @FXML DatePicker dayDatePicker = new DatePicker();
+    @FXML ChoiceBox monthChoiceBox = new ChoiceBox<>();
+    @FXML Spinner yearSpinner = new Spinner<>();
 
     @FXML private TextField toDoListTextField = new TextField();
 
@@ -39,6 +40,8 @@ public class CalendarController implements Initializable  {
         notesDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("notes"));
         locationDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
 
+        setUpMonthViewLabelsArrayList();
+
         try {
             updateToDoList();
         } catch (FileNotFoundException e) {
@@ -48,9 +51,17 @@ public class CalendarController implements Initializable  {
         LocalDate dateToday = LocalDate.now();
         dayDisplayDate = dateToday;
         dayDatePicker.setValue(dateToday);
+        monthChoiceBox.setValue(dateToday.getMonth().toString());
+        yearSpinner.getValueFactory().setValue(dateToday.getYear());
 
         try {
             updateDayView(dayDisplayDate);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            updateMonthView();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -83,19 +94,6 @@ public class CalendarController implements Initializable  {
     }
 
     public void onAddToDoButtonClick() throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("add-to-do-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 309, 135);
-//
-//        newWindow = new Stage();
-//        newWindow.setTitle("Add To Do List Item");
-//        newWindow.setScene(scene);
-//
-//        newWindow.setX(500);
-//        newWindow.setY(250);
-//
-//        newWindow.show();
-//        updateToDoList();
-
         ToDoList.addItem(toDoListTextField.getText());
 
         toDoListTextField.clear();
@@ -104,18 +102,6 @@ public class CalendarController implements Initializable  {
     }
 
     public void onRemoveToDoButtonClick() throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("remove-to-do-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 309, 135);
-//
-//        newWindow = new Stage();
-//        newWindow.setTitle("Remove To Do List Item");
-//        newWindow.setScene(scene);
-//
-//        newWindow.setX(500);
-//        newWindow.setY(250);
-//
-//        newWindow.show();
-
         ToDoList.removeItem(toDoListTextField.getText());
 
         toDoListTextField.clear();
@@ -128,6 +114,7 @@ public class CalendarController implements Initializable  {
 
 
     //calendar stuff
+    //day view
     @FXML private TableView dayTableView = new TableView();
     private static TableView dayTableView_ = new TableView();
 
@@ -137,7 +124,55 @@ public class CalendarController implements Initializable  {
     @FXML private TableColumn<Event, String> notesDayTableColumn = new TableColumn<>();
     @FXML private TableColumn<Event, String> locationDayTableColumn = new TableColumn<>();
 
+    //month view
+    ArrayList<Label> monthViewLabels = new ArrayList<>();
+
+    @FXML private Label week1SUNDAYLabel = new Label();
+    @FXML private Label week1MONDAYLabel = new Label();
+    @FXML private Label week1TUESDAYLabel = new Label();
+    @FXML private Label week1WEDNESDAYLabel = new Label();
+    @FXML private Label week1THURSDAYLabel = new Label();
+    @FXML private Label week1FRIDAYLabel = new Label();
+    @FXML private Label week1SATURDAYLabel = new Label();
+    @FXML private Label week2SUNDAYLabel = new Label();
+    @FXML private Label week2MONDAYLabel = new Label();
+    @FXML private Label week2TUESDAYLabel = new Label();
+    @FXML private Label week2WEDNESDAYLabel = new Label();
+    @FXML private Label week2THURSDAYLabel = new Label();
+    @FXML private Label week2FRIDAYLabel = new Label();
+    @FXML private Label week2SATURDAYLabel = new Label();
+    @FXML private Label week3SUNDAYLabel = new Label();
+    @FXML private Label week3MONDAYLabel = new Label();
+    @FXML private Label week3TUESDAYLabel = new Label();
+    @FXML private Label week3WEDNESDAYLabel = new Label();
+    @FXML private Label week3THURSDAYLabel = new Label();
+    @FXML private Label week3FRIDAYLabel = new Label();
+    @FXML private Label week3SATURDAYLabel = new Label();
+    @FXML private Label week4SUNDAYLabel = new Label();
+    @FXML private Label week4MONDAYLabel = new Label();
+    @FXML private Label week4TUESDAYLabel = new Label();
+    @FXML private Label week4WEDNESDAYLabel = new Label();
+    @FXML private Label week4THURSDAYLabel = new Label();
+    @FXML private Label week4FRIDAYLabel = new Label();
+    @FXML private Label week4SATURDAYLabel = new Label();
+    @FXML private Label week5SUNDAYLabel = new Label();
+    @FXML private Label week5MONDAYLabel = new Label();
+    @FXML private Label week5TUESDAYLabel = new Label();
+    @FXML private Label week5WEDNESDAYLabel = new Label();
+    @FXML private Label week5THURSDAYLabel = new Label();
+    @FXML private Label week5FRIDAYLabel = new Label();
+    @FXML private Label week5SATURDAYLabel = new Label();
+    @FXML private Label week6SUNDAYLabel = new Label();
+    @FXML private Label week6MONDAYLabel = new Label();
+    @FXML private Label week6TUESDAYLabel = new Label();
+    @FXML private Label week6WEDNESDAYLabel = new Label();
+    @FXML private Label week6THURSDAYLabel = new Label();
+    @FXML private Label week6FRIDAYLabel = new Label();
+    @FXML private Label week6SATURDAYLabel = new Label();
+
     private static ArrayList<Event> events = new ArrayList<>();
+
+
 
     public static void updateDayView(LocalDate date) throws FileNotFoundException {
 
@@ -154,13 +189,168 @@ public class CalendarController implements Initializable  {
         }
     }
 
+
+
     public void updateWeekView() {
 
     }
 
-    public void updateMonthView() {
 
+
+    public void updateMonthView() throws FileNotFoundException {
+        clearMonthView();
+
+        LocalDate newDate = LocalDate.of(Integer.valueOf(yearSpinner.getValue().toString()), monthStringToInt(monthChoiceBox.getValue().toString()), 1);
+        int index = dayOfWeekStringToInt(newDate.getDayOfWeek().toString()) - 1;
+        events = GetData.getAllEventsForDay(newDate, new ArrayList<>());
+        String text = "";
+
+        for (int i = 0; i < newDate.lengthOfMonth() + 1; i++) {
+            int day = i + 1;
+            text = String.valueOf(day);
+
+            events = GetData.getAllEventsForDay(newDate.plusDays(i), new ArrayList<>());
+
+            for (Event event : events) {
+                if (!event.getTitle().equals("No Events Today")) {
+                    text += "\n" + event.getTitle();
+                }
+            }
+
+            monthViewLabels.get(index + i).setText(text);
+        }
     }
+
+    public void monthPicked() throws FileNotFoundException {
+        updateMonthView();
+    }
+
+    public void setUpMonthViewLabelsArrayList() {
+        monthViewLabels.add(week1SUNDAYLabel);
+        monthViewLabels.add(week1MONDAYLabel);
+        monthViewLabels.add(week1TUESDAYLabel);
+        monthViewLabels.add(week1WEDNESDAYLabel);
+        monthViewLabels.add(week1THURSDAYLabel);
+        monthViewLabels.add(week1FRIDAYLabel);
+        monthViewLabels.add(week1SATURDAYLabel);
+        monthViewLabels.add(week2SUNDAYLabel);
+        monthViewLabels.add(week2MONDAYLabel);
+        monthViewLabels.add(week2TUESDAYLabel);
+        monthViewLabels.add(week2WEDNESDAYLabel);
+        monthViewLabels.add(week2THURSDAYLabel);
+        monthViewLabels.add(week2FRIDAYLabel);
+        monthViewLabels.add(week2SATURDAYLabel);
+        monthViewLabels.add(week3SUNDAYLabel);
+        monthViewLabels.add(week3MONDAYLabel);
+        monthViewLabels.add(week3TUESDAYLabel);
+        monthViewLabels.add(week3WEDNESDAYLabel);
+        monthViewLabels.add(week3THURSDAYLabel);
+        monthViewLabels.add(week3FRIDAYLabel);
+        monthViewLabels.add(week3SATURDAYLabel);
+        monthViewLabels.add(week4SUNDAYLabel);
+        monthViewLabels.add(week4MONDAYLabel);
+        monthViewLabels.add(week4TUESDAYLabel);
+        monthViewLabels.add(week4WEDNESDAYLabel);
+        monthViewLabels.add(week4THURSDAYLabel);
+        monthViewLabels.add(week4FRIDAYLabel);
+        monthViewLabels.add(week4SATURDAYLabel);
+        monthViewLabels.add(week5SUNDAYLabel);
+        monthViewLabels.add(week5MONDAYLabel);
+        monthViewLabels.add(week5TUESDAYLabel);
+        monthViewLabels.add(week5WEDNESDAYLabel);
+        monthViewLabels.add(week5THURSDAYLabel);
+        monthViewLabels.add(week5FRIDAYLabel);
+        monthViewLabels.add(week5SATURDAYLabel);
+        monthViewLabels.add(week6SUNDAYLabel);
+        monthViewLabels.add(week6MONDAYLabel);
+        monthViewLabels.add(week6TUESDAYLabel);
+        monthViewLabels.add(week6WEDNESDAYLabel);
+        monthViewLabels.add(week6THURSDAYLabel);
+        monthViewLabels.add(week6FRIDAYLabel);
+        monthViewLabels.add(week6SATURDAYLabel);
+    }
+
+    public void clearMonthView() {
+        for (Label label : monthViewLabels) {
+            label.setText("");
+        }
+    }
+
+    public int monthStringToInt(String monthString) {
+        int monthInt = 0;
+        switch (monthString) {
+            case "JANUARY":
+                monthInt = 1;
+                break;
+            case "FEBRUARY":
+                monthInt = 2;
+                break;
+            case "MARCH":
+                monthInt = 3;
+                break;
+            case "APRIL":
+                monthInt = 4;
+                break;
+            case "MAY":
+                monthInt = 5;
+                break;
+            case "JUNE":
+                monthInt = 6;
+                break;
+            case "JULY":
+                monthInt = 7;
+                break;
+            case "AUGUST":
+                monthInt = 8;
+                break;
+            case "SEPTEMBER":
+                monthInt = 9;
+                break;
+            case "OCTOBER":
+                monthInt = 10;
+                break;
+            case "NOVEMBER":
+                monthInt = 11;
+                break;
+            case "DECEMBER":
+                monthInt = 12;
+                break;
+
+        }
+
+        return monthInt;
+    }
+
+    public int dayOfWeekStringToInt(String dayString) {
+        int dayInt = 0;
+        switch (dayString) {
+            case "SUNDAY":
+                dayInt = 1;
+                break;
+            case "MONDAY":
+                dayInt = 2;
+                break;
+            case "TUESDAY":
+                dayInt = 3;
+                break;
+            case "WEDNESDAY":
+                dayInt = 4;
+                break;
+            case "THURSDAY":
+                dayInt = 5;
+                break;
+            case "FRIDAY":
+                dayInt = 6;
+                break;
+            case "SATURDAY":
+                dayInt = 7;
+                break;
+        }
+
+        return dayInt;
+    }
+
+
 
     public static void sortEvents (ArrayList<Event> events) {
         //sortEventsByDate(events);
@@ -170,17 +360,17 @@ public class CalendarController implements Initializable  {
     private void sortEventsByDate(ArrayList<Event> events) {
         int i = 0;
         int j = 0;
-        if (events.get(i).getYear() == events.get(j).getYear()) {
-            if (events.get(i).getMonth() == events.get(j).getMonth()) {
-                if (events.get(i).getDay() == events.get(j).getDay()) {
-
-                }
-            } else {
-
-            }
-        } else {
-
-        }
+//        if (events.get(i).getYear() == events.get(j).getYear()) {
+//            if (events.get(i).getMonth() == events.get(j).getMonth()) {
+//                if (events.get(i).getDay() == events.get(j).getDay()) {
+//
+//                }
+//            } else {
+//
+//            }
+//        } else {
+//
+//        }
     }
 
     private static void sortEventsByStartTime(ArrayList<Event> events, int begin, int end) {
@@ -241,6 +431,8 @@ public class CalendarController implements Initializable  {
         }
     }
 
+
+
     public void onAddEventButtonClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("add-event-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 728, 350);
@@ -256,11 +448,31 @@ public class CalendarController implements Initializable  {
     }
 
     public void onEditEventButtonClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("edit-event-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 728, 376);
 
+        newWindow = new Stage();
+        newWindow.setTitle("Edit Event");
+        newWindow.setScene(scene);
+
+        newWindow.setX(500);
+        newWindow.setY(250);
+
+        newWindow.show();
     }
 
     public void onRemoveEventButtonClick() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("remove-event-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 501, 183);
 
+        newWindow = new Stage();
+        newWindow.setTitle("Edit Event");
+        newWindow.setScene(scene);
+
+        newWindow.setX(500);
+        newWindow.setY(250);
+
+        newWindow.show();
     }
 
     public void dayViewDatePicked() throws FileNotFoundException {

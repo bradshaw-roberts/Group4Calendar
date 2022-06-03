@@ -1,12 +1,16 @@
 package com.group4calendar;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
 
 
-public class AddEventController {
+public class AddEventController implements Initializable {
 
     @FXML private ChoiceBox addEventStartTimeAMPMChoiceBox = new ChoiceBox();
     @FXML private ChoiceBox addEventEndTimeAMPMChoiceBox = new ChoiceBox();
@@ -22,10 +26,11 @@ public class AddEventController {
 
     @FXML private DatePicker addEventDateInput;
 
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//
-//    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        LocalDate dateToday = LocalDate.now();
+        addEventDateInput.setValue(dateToday);
+    }
 
     public void onAddEventSubmitButtonClick () throws IOException {
         String startTime = "";

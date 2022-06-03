@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -13,18 +18,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="336.0" prefWidth="728.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group4calendar.CalendarController">
+<AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="644.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group4calendar.CalendarController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="1110.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="1110.0">
          <children>
-            <SplitPane dividerPositions="0.763167388167388" prefHeight="486.0" prefWidth="1110.0">
+            <SplitPane dividerPositions="0.763167388167388" prefHeight="644.0" prefWidth="1110.0">
               <items>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <TabPane prefHeight="429.0" prefWidth="427.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane prefHeight="622.0" prefWidth="843.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Day">
                               <content>
@@ -33,6 +41,9 @@
                                           <HBox prefHeight="34.0" prefWidth="843.0">
                                              <children>
                                                 <Label prefHeight="32.0" prefWidth="28.0" text="Date">
+                                                    <style>
+
+                                                    </style>
                                                    <HBox.margin>
                                                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                                    </HBox.margin>
@@ -44,7 +55,7 @@
                                                 </DatePicker>
                                              </children>
                                           </HBox>
-                                          <TableView fx:id="dayTableView" layoutY="43.0" prefHeight="359.0" prefWidth="854.0">
+                                          <TableView fx:id="dayTableView" layoutY="43.0" prefHeight="526.0" prefWidth="843.0">
                                             <columns>
                                                 <TableColumn fx:id="startTimeDayTableColumn" prefWidth="75.0" text="Start Time" />
                                                 <TableColumn fx:id="endTimeDayTableColumn" prefWidth="75.0" text="End Time" />
@@ -59,17 +70,315 @@
                             </Tab>
                             <Tab text="Week">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <ScrollPane layoutX="150.0" layoutY="95.0" prefHeight="200.0" prefWidth="200.0">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+                                            </content>
+                                          </ScrollPane>
+                                       </children></AnchorPane>
                               </content>
                             </Tab>
-                              <Tab text="Month">
+                              <Tab onSelectionChanged="#updateMonthView" text="Month">
                                 <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <ChoiceBox fx:id="monthChoiceBox" layoutX="266.0" layoutY="8.0" onAction="#monthPicked" prefWidth="150.0">
+                                               <items>
+                                                   <FXCollections fx:factory="observableArrayList">
+                                                       <String fx:value="JANUARY" />
+                                                       <String fx:value="FEBRUARY" />
+                                                       <String fx:value="MARCH" />
+                                                       <String fx:value="APRIL" />
+                                                       <String fx:value="MAY" />
+                                                       <String fx:value="JUNE" />
+                                                       <String fx:value="JULY" />
+                                                       <String fx:value="AUGUST" />
+                                                       <String fx:value="SEPTEMBER" />
+                                                       <String fx:value="OCTOBER" />
+                                                       <String fx:value="NOVEMBER" />
+                                                       <String fx:value="DECEMBER" />
+                                                   </FXCollections>
+                                               </items>
+                                          </ChoiceBox>
+                                          <Spinner fx:id="yearSpinner" layoutX="427.0" layoutY="8.0" max="2099" min="2000" />
+                                          <GridPane layoutY="43.0" prefHeight="526.0" prefWidth="843.0" style="-fx-border-color: black; -fx-grid-lines-visible: true;">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="87.25" minHeight="10.0" prefHeight="87.25" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="87.25" minHeight="10.0" prefHeight="87.25" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="87.25" minHeight="10.0" prefHeight="87.25" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="87.25" minHeight="10.0" prefHeight="87.25" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="87.25" minHeight="10.0" prefHeight="87.25" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="87.25" minHeight="10.0" prefHeight="87.25" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="134.0" text="Sunday">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="125.0" text="Monday" GridPane.columnIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="129.0" text="Tuesday" GridPane.columnIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="141.0" text="Wednesday" GridPane.columnIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="170.0" text="Thursday" GridPane.columnIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="156.0" text="Friday" GridPane.columnIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label alignment="CENTER" prefHeight="18.0" prefWidth="209.0" text="Saturday" GridPane.columnIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week1SUNDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week1MONDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week1TUESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week1WEDNESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week1THURSDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week1FRIDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="5" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week1SATURDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week2SUNDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week2MONDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week2TUESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week2WEDNESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week2THURSDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week2FRIDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week2SATURDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week3SUNDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week3MONDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week3TUESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week3WEDNESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week3THURSDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week3FRIDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week3SATURDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week4SUNDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week4MONDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week4TUESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week4WEDNESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week4THURSDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week4FRIDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week4SATURDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week5SUNDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week6SUNDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week5MONDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week6MONDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week5TUESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week6TUESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week5WEDNESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week6WEDNESDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week5THURSDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week6THURSDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week5FRIDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="5" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week6FRIDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week5SATURDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                                <Label fx:id="week6SATURDAYLabel" alignment="TOP_LEFT" prefHeight="87.25" prefWidth="122.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                                                   <GridPane.margin>
+                                                      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                                   </GridPane.margin>
+                                                </Label>
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                          </GridPane>
+                                       </children></AnchorPane>
                                 </content>
                               </Tab>
                           </tabs>
                         </TabPane>
-                        <ButtonBar prefHeight="50.0" prefWidth="427.0">
+                        <ButtonBar prefHeight="48.0" prefWidth="843.0">
                           <buttons>
                             <Button fx:id="addEventButton" mnemonicParsing="false" onAction="#onAddEventButtonClick" text="Add" />
                               <Button fx:id="editEventButton" mnemonicParsing="false" onAction="#onEditEventButtonClick" text="Edit" />
@@ -84,7 +393,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="337.0" prefWidth="338.0">
                      <children>
                         <VBox prefHeight="484.0" prefWidth="247.0" />
-                        <BorderPane prefHeight="484.0" prefWidth="260.0">
+                        <BorderPane prefHeight="650.0" prefWidth="260.0">
                            <top>
                               <Label text="To Do List" BorderPane.alignment="CENTER">
                                  <BorderPane.margin>
