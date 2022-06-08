@@ -34,7 +34,7 @@ public class RemoveEventController implements Initializable {
     }
 
     public void dateChanged(LocalDate date) throws FileNotFoundException {
-        events = GetData.getAllEventsForDay(date, new ArrayList<>());
+        events = GetData.getAllEventsForDay(date);
 
         removeEventTitleChoiceBox.getItems().clear();
 

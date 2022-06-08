@@ -21,12 +21,6 @@ public class CalendarController implements Initializable  {
 
     public static LocalDate dayDisplayDate;
 
-    @FXML DatePicker dayDatePicker = new DatePicker();
-    @FXML ChoiceBox monthChoiceBox = new ChoiceBox<>();
-    @FXML Spinner yearSpinner = new Spinner<>();
-
-    @FXML private TextField toDoListTextField = new TextField();
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         toDoListTableView_ = toDoListTableView;
@@ -41,6 +35,7 @@ public class CalendarController implements Initializable  {
         locationDayTableColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
 
         setUpMonthViewLabelsArrayList();
+        setUpWeekViewLabelsArrayList();
 
         try {
             updateToDoList();
@@ -51,6 +46,7 @@ public class CalendarController implements Initializable  {
         LocalDate dateToday = LocalDate.now();
         dayDisplayDate = dateToday;
         dayDatePicker.setValue(dateToday);
+        weekDatePicker.setValue(dateToday);
         monthChoiceBox.setValue(dateToday.getMonth().toString());
         yearSpinner.getValueFactory().setValue(dateToday.getYear());
 
@@ -65,11 +61,18 @@ public class CalendarController implements Initializable  {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        try {
+            updateWeekView();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
 
     //to do list stuff
+    @FXML private TextField toDoListTextField = new TextField();
     @FXML private TableView toDoListTableView = new TableView();
     private static TableView toDoListTableView_;
 
@@ -115,6 +118,8 @@ public class CalendarController implements Initializable  {
 
     //calendar stuff
     //day view
+    @FXML DatePicker dayDatePicker = new DatePicker();
+
     @FXML private TableView dayTableView = new TableView();
     private static TableView dayTableView_ = new TableView();
 
@@ -124,7 +129,32 @@ public class CalendarController implements Initializable  {
     @FXML private TableColumn<Event, String> notesDayTableColumn = new TableColumn<>();
     @FXML private TableColumn<Event, String> locationDayTableColumn = new TableColumn<>();
 
+    //week view
+    @FXML DatePicker weekDatePicker = new DatePicker();
+
+    ArrayList<Label> weekViewLabels = new ArrayList<>();
+    ArrayList<Label> weekViewDateLabels = new ArrayList<>();
+
+    @FXML private Label weekViewSUNDAYLabel = new Label();
+    @FXML private Label weekViewMONDAYLabel = new Label();
+    @FXML private Label weekViewTUESDAYLabel = new Label();
+    @FXML private Label weekViewWEDNESDAYLabel = new Label();
+    @FXML private Label weekViewTHURSDAYLabel = new Label();
+    @FXML private Label weekViewFRIDAYLabel = new Label();
+    @FXML private Label weekViewSATURDAYLabel = new Label();
+
+    @FXML private Label weekViewSUNDAYDateLabel = new Label();
+    @FXML private Label weekViewMONDAYDateLabel = new Label();
+    @FXML private Label weekViewTUESDAYDateLabel = new Label();
+    @FXML private Label weekViewWEDNESDAYDateLabel = new Label();
+    @FXML private Label weekViewTHURSDAYDateLabel = new Label();
+    @FXML private Label weekViewFRIDAYDateLabel = new Label();
+    @FXML private Label weekViewSATURDAYDateLabel = new Label();
+
     //month view
+    @FXML ChoiceBox monthChoiceBox = new ChoiceBox<>();
+    @FXML Spinner yearSpinner = new Spinner<>();
+
     ArrayList<Label> monthViewLabels = new ArrayList<>();
 
     @FXML private Label week1SUNDAYLabel = new Label();
@@ -176,7 +206,7 @@ public class CalendarController implements Initializable  {
 
     public static void updateDayView(LocalDate date) throws FileNotFoundException {
 
-        ArrayList<Event> events = GetData.getAllEventsForDay(date, new ArrayList<>());
+        ArrayList<Event> events = GetData.getAllEventsForDay(date);
 
         sortEvents(events);
 
@@ -191,10 +221,112 @@ public class CalendarController implements Initializable  {
 
 
 
-    public void updateWeekView() {
+    public void updateWeekView() throws FileNotFoundException {
+        clearWeekView();
 
+        LocalDate newDate = weekDatePicker.getValue();
+        ArrayList<Event> events = new ArrayList<>();
+        ArrayList<LocalDate> datesInWeek = new ArrayList<>();
+
+        switch (newDate.getDayOfWeek().toString()) {
+            case "SUNDAY":
+                for (int i = 0; i < 7; i++) {
+                    datesInWeek.add(newDate.plusDays(i));
+                }
+                break;
+            case "MONDAY":
+                for (int i = 1; i > 0; i--) {
+                    datesInWeek.add(newDate.minusDays(i));
+                }
+                datesInWeek.add(newDate);
+                for (int i = 1; i < 6; i++) {
+                    datesInWeek.add(newDate.plusDays(i));
+                }
+                break;
+            case "TUESDAY":
+                for (int i = 2; i > 0; i--) {
+                    datesInWeek.add(newDate.minusDays(i));
+                }
+                datesInWeek.add(newDate);
+                for (int i = 1; i < 5; i++) {
+                    datesInWeek.add(newDate.plusDays(i));
+                }
+                break;
+            case "WEDNESDAY":
+                for (int i = 3; i > 0; i--) {
+                    datesInWeek.add(newDate.minusDays(i));
+                }
+                datesInWeek.add(newDate);
+                for (int i = 1; i < 4; i++) {
+                    datesInWeek.add(newDate.plusDays(i));
+                }
+                break;
+            case "THURSDAY":
+                for (int i = 4; i > 0; i--) {
+                    datesInWeek.add(newDate.minusDays(i));
+                }
+                datesInWeek.add(newDate);
+                for (int i = 1; i < 3; i++) {
+                    datesInWeek.add(newDate.plusDays(i));
+                }
+                break;
+            case "FRIDAY":
+                for (int i = 5; i > 0; i--) {
+                    datesInWeek.add(newDate.minusDays(i));
+                }
+                datesInWeek.add(newDate);
+                for (int i = 1; i < 2; i++) {
+                    datesInWeek.add(newDate.plusDays(i));
+                }
+                break;
+            case "SATURDAY":
+                for (int i = 6; i > 0; i--) {
+                    datesInWeek.add(newDate.minusDays(i));
+                }
+                datesInWeek.add(newDate);
+                break;
+        }
+
+        for (int i = 0; i < 7; i++) {
+            events = GetData.getAllEventsForDay(datesInWeek.get(i));
+            for (Event event : events) {
+                if (!event.getTitle().equals("No Events Today")) {
+                    weekViewLabels.get(i).setText(weekViewLabels.get(i).getText() + event.getTitle() + "\n" + event.getStartTime() + " - " + event.getEndTime() + "\nAt: " + event.getLocation() + "\n\n");
+                } else {
+                    weekViewLabels.get(i).setText(weekViewLabels.get(i).getText() + event.getTitle() + "\n\n");
+                }
+            }
+
+            weekViewDateLabels.get(i).setText(datesInWeek.get(i).getMonth().toString() + " " + datesInWeek.get(i).getDayOfMonth());
+        }
     }
 
+    public void setUpWeekViewLabelsArrayList() {
+        weekViewLabels.add(weekViewSUNDAYLabel);
+        weekViewLabels.add(weekViewMONDAYLabel);
+        weekViewLabels.add(weekViewTUESDAYLabel);
+        weekViewLabels.add(weekViewWEDNESDAYLabel);
+        weekViewLabels.add(weekViewTHURSDAYLabel);
+        weekViewLabels.add(weekViewFRIDAYLabel);
+        weekViewLabels.add(weekViewSATURDAYLabel);
+
+        weekViewDateLabels.add(weekViewSUNDAYDateLabel);
+        weekViewDateLabels.add(weekViewMONDAYDateLabel);
+        weekViewDateLabels.add(weekViewTUESDAYDateLabel);
+        weekViewDateLabels.add(weekViewWEDNESDAYDateLabel);
+        weekViewDateLabels.add(weekViewTHURSDAYDateLabel);
+        weekViewDateLabels.add(weekViewFRIDAYDateLabel);
+        weekViewDateLabels.add(weekViewSATURDAYDateLabel);
+    }
+
+    public void clearWeekView() {
+        for (Label label : weekViewLabels) {
+            label.setText("");
+        }
+        for (Label label : weekViewDateLabels) {
+            label.setText("");
+        }
+    }
 
 
     public void updateMonthView() throws FileNotFoundException {
@@ -202,14 +334,14 @@ public class CalendarController implements Initializable  {
 
         LocalDate newDate = LocalDate.of(Integer.valueOf(yearSpinner.getValue().toString()), monthStringToInt(monthChoiceBox.getValue().toString()), 1);
         int index = dayOfWeekStringToInt(newDate.getDayOfWeek().toString()) - 1;
-        events = GetData.getAllEventsForDay(newDate, new ArrayList<>());
+        events = GetData.getAllEventsForDay(newDate);
         String text = "";
 
         for (int i = 0; i < newDate.lengthOfMonth() + 1; i++) {
             int day = i + 1;
             text = String.valueOf(day);
 
-            events = GetData.getAllEventsForDay(newDate.plusDays(i), new ArrayList<>());
+            events = GetData.getAllEventsForDay(newDate.plusDays(i));
 
             for (Event event : events) {
                 if (!event.getTitle().equals("No Events Today")) {
@@ -351,26 +483,18 @@ public class CalendarController implements Initializable  {
     }
 
 
+    public void updateAllViews() throws FileNotFoundException {
+        dayDisplayDate = dayDatePicker.getValue();
+        updateDayView(dayDisplayDate);
+        updateWeekView();
+        updateMonthView();
+    }
+
+
 
     public static void sortEvents (ArrayList<Event> events) {
         //sortEventsByDate(events);
         sortEventsByStartTime(events, 0, events.size() - 1);
-    }
-
-    private void sortEventsByDate(ArrayList<Event> events) {
-        int i = 0;
-        int j = 0;
-//        if (events.get(i).getYear() == events.get(j).getYear()) {
-//            if (events.get(i).getMonth() == events.get(j).getMonth()) {
-//                if (events.get(i).getDay() == events.get(j).getDay()) {
-//
-//                }
-//            } else {
-//
-//            }
-//        } else {
-//
-//        }
     }
 
     private static void sortEventsByStartTime(ArrayList<Event> events, int begin, int end) {
@@ -478,5 +602,9 @@ public class CalendarController implements Initializable  {
     public void dayViewDatePicked() throws FileNotFoundException {
         dayDisplayDate = dayDatePicker.getValue();
         updateDayView(dayDisplayDate);
+    }
+
+    public void weekViewDatePicked() throws FileNotFoundException {
+        updateWeekView();
     }
 }
