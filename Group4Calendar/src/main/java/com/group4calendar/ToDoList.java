@@ -46,9 +46,7 @@ public class ToDoList {
         BufferedReader br = new BufferedReader(new FileReader(importFile));
         PrintWriter bw = new PrintWriter(new FileWriter(tempFile));
 
-
         String currentLine;
-        String removeLine = name;
 
         //Reads the original ToDoList into the new temp one, excluding the
         //line to be deleted
@@ -58,11 +56,11 @@ public class ToDoList {
             bw.println(currentLine);
         }
 
+        //close files
         bw.close();
         br.close();
 
-//        System.out.println("Renaming: " + tempFile.getAbsolutePath() + " --> " + importFile.getAbsolutePath()); //debug testing
-
+        //Delete old ToDoList.txt and replace it with temp.tmp
         try{
             Files.delete(importFile.toPath());
             Files.move(tempFile.toPath(), importFile.toPath());
