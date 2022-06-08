@@ -1,0 +1,15 @@
+
+----------
+Title
+Day of the Week
+Start Time
+End Time
+Location
+Description/Notes
+----------
+Work
+Monday
+09:00 AM
+02:00 PM
+The Office
+Just another day at the office.
