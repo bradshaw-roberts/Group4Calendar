@@ -25,11 +25,14 @@ public class GetData {
 
     }
 
-//    public static void editEvent(Event oldEvent, Event newEvent) {
-//        //this will call addEvent and send it the newEvent
-//        //also call removeEvent and send it the oldEvent
-//    }
-//
+   public static void editEvent(Event oldEvent, Event newEvent) throws IOException {
+       //this will call addEvent and send it the newEvent
+       //also call removeEvent and send it the oldEvent
+
+       removeEvent(oldEvent);
+       addEvent(newEvent);
+   }
+
     public static ArrayList<Event> getAllEventsForDay(LocalDate date) throws FileNotFoundException {
         //get all events on a certain date
 
