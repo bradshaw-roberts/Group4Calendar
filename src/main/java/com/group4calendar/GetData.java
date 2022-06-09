@@ -1,6 +1,7 @@
 package com.group4calendar;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,6 +23,40 @@ public class GetData {
     public static void removeEvent(Event event) {
         //remove the old event from the file
 
+        File importFile = new File("src/main/resources/ToDoList.txt");
+        if(!importFile.isFile()){
+            System.out.println("ToDoList.txt does not exist");
+            return;
+        }
+        //Creates a new temp file, to later replace the original
+        File tempFile = new File("src/main/resources/temp.tmp");
+
+        BufferedReader br = new BufferedReader(new FileReader(importFile));
+        PrintWriter bw = new PrintWriter(new FileWriter(tempFile));
+
+        String currentLine;
+
+        //Reads the original ToDoList into the new temp one, excluding the
+        //line to be deleted
+        while ((currentLine = br.readLine()) != null) {
+            String trimmedLine = currentLine.trim();
+            if(trimmedLine.equalsIgnoreCase(name)) continue;
+            bw.println(currentLine);
+        }
+
+        //close files
+        bw.close();
+        br.close();
+
+        //Delete old ToDoList.txt and replace it with temp.tmp
+        try{
+            Files.delete(importFile.toPath());
+            Files.move(tempFile.toPath(), importFile.toPath());
+        }
+        catch (Exception e) {
+            System.out.println("ERROR");
+            e.printStackTrace();
+        }
 
     }
 
