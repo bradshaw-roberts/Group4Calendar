@@ -78,6 +78,10 @@ public class CalendarController implements Initializable  {
 
     @FXML private TableColumn<ToDoListItem, String> toDoListTableColumn = new TableColumn<>("Items");
 
+    /**
+     *
+     * @throws FileNotFoundException
+     */
     public static void updateToDoList() throws FileNotFoundException {
         ArrayList<String> currentToDoListItems = ToDoList.getAll();
 
