@@ -83,7 +83,7 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <TextField fx:id="addEventLocationTextField" prefHeight="26.0" prefWidth="189.0">
+                              <TextField fx:id="editEventLocationTextField" prefHeight="26.0" prefWidth="189.0">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>

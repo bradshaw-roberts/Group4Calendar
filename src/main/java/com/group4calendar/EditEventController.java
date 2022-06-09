@@ -83,45 +83,53 @@ public class EditEventController implements Initializable {
         String endTime = "";
 
         // convert the start time input to string for Event object
-//        if (addEventStartTimeHourSpinner.getValue() == 12) {
-//            startTime += addEventStartTimeHourSpinner.getValue();
-//        } else {
-//            startTime += "0" + addEventStartTimeHourSpinner.getValue();
-//        }
-//
-//        startTime += ":";
-//
-//        if (addEventStartTimeMinSpinner.getValue() > 10) {
-//            startTime += addEventStartTimeMinSpinner.getValue();
-//        } else {
-//            startTime += "0" + addEventStartTimeMinSpinner.getValue();
-//        }
-//
-//        startTime += " " + addEventStartTimeAMPMChoiceBox.getValue();
-//
-//        // convert the end time input to string for Event object
-//        if (addEventEndTimeHourSpinner.getValue() == 12) {
-//            endTime += addEventEndTimeHourSpinner.getValue();
-//        } else {
-//            endTime += "0" + addEventEndTimeHourSpinner.getValue();
-//        }
-//
-//        endTime += ":";
-//
-//        if (addEventEndTimeMinSpinner.getValue() > 10) {
-//            endTime += addEventEndTimeMinSpinner.getValue();
-//        } else {
-//            endTime += "0" + addEventEndTimeMinSpinner.getValue();
-//        }
-//
-//        endTime += " " + addEventEndTimeAMPMChoiceBox.getValue();
-//
-//        Event event = new Event(addEventTitleTextField.getText(), addEventDateInput.getValue().toString(), addEventDateInput.getValue().getDayOfWeek().toString(), startTime, endTime, addEventLocationTextField.getText(), addEventNotesTextArea.getText());
-//
-//        GetData.addEvent(event);
-//
-//        CalendarController.updateDayView(CalendarController.dayDisplayDate);
-//
-//        CalendarController.closeNewWindow();
+        if (editEventStartTimeHourSpinner.getValue() == 12) {
+            startTime += editEventStartTimeHourSpinner.getValue();
+        } else {
+            startTime += "0" + editEventStartTimeHourSpinner.getValue();
+        }
+
+        startTime += ":";
+
+        if (editEventStartTimeMinSpinner.getValue() > 10) {
+            startTime += editEventStartTimeMinSpinner.getValue();
+        } else {
+            startTime += "0" + editEventStartTimeMinSpinner.getValue();
+        }
+
+        startTime += " " + editEventStartTimeAMPMChoiceBox.getValue();
+
+        // convert the end time input to string for Event object
+        if (editEventEndTimeHourSpinner.getValue() == 12) {
+            endTime += editEventEndTimeHourSpinner.getValue();
+        } else {
+            endTime += "0" + editEventEndTimeHourSpinner.getValue();
+        }
+
+        endTime += ":";
+
+        if (editEventEndTimeMinSpinner.getValue() > 10) {
+            endTime += editEventEndTimeMinSpinner.getValue();
+        } else {
+            endTime += "0" + editEventEndTimeMinSpinner.getValue();
+        }
+
+        endTime += " " + editEventEndTimeAMPMChoiceBox.getValue();
+
+        Event newEvent = new Event(editEventTitleChoiceBox.getValue().toString(), editEventDateInput.getValue().toString(), editEventDateInput.getValue().getDayOfWeek().toString(), startTime, endTime, editEventLocationTextField.getText(), editEventNotesTextArea.getText());
+
+        Event oldEvent = events.get(0);
+
+        for (Event event : events) {
+            if (event.getTitle().equals(editEventTitleChoiceBox.getValue().toString())) {
+                oldEvent = event;
+            }
+        }
+
+        GetData.editEvent(oldEvent, newEvent);
+
+        CalendarController.updateDayView(CalendarController.dayDisplayDate);
+
+        CalendarController.closeNewWindow();
     }
 }
