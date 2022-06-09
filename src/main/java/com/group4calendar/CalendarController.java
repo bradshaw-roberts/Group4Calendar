@@ -300,7 +300,6 @@ public class CalendarController implements Initializable  {
             weekViewDateLabels.get(i).setText(datesInWeek.get(i).getMonth().toString() + " " + datesInWeek.get(i).getDayOfMonth());
         }
     }
-    //testing git 1 2 3
 
     public void setUpWeekViewLabelsArrayList() {
         weekViewLabels.add(weekViewSUNDAYLabel);
