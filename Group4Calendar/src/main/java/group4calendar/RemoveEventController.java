@@ -1,6 +1,24 @@
+/**
+ * Controller for remove-event-view.fxml
+ * The user will select the date of the event they want to remove.
+ * Then the title choicebox will be changed to have all the events
+ * on the date title as values. The user will then select one of those
+ * titles and click the submit button. Then that event will be removed
+ * from the files.
+ *
+ * CIS-2999 Summer I Semester
+ * Oakland University
+ * Group 4 Calendar
+ *
+ * Brenden Nagey
+ * Ravi Prajapati
+ * Bradshaw Roberts
+ * Nora Sinishtaj
+ * V VanCamp
+ */
+
 package com.group4calendar;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -33,6 +51,13 @@ public class RemoveEventController implements Initializable {
         }
     }
 
+    /**
+     * When the datepicker is changed the title choicebox
+     * will be updated.
+     *
+     * @param date
+     * @throws FileNotFoundException
+     */
     public void dateChanged(LocalDate date) throws FileNotFoundException {
         events = GetData.getAllEventsForDay(date);
 
@@ -45,10 +70,20 @@ public class RemoveEventController implements Initializable {
         removeEventTitleChoiceBox.setValue(events.get(0).getTitle());
     }
 
+    /**
+     * Send the date to dateChanged.
+     *
+     * @throws FileNotFoundException
+     */
     public void removeEventDatePicked() throws FileNotFoundException {
         dateChanged(removeEventDatePicker.getValue());
     }
 
+    /**
+     * Submit button is clicked and the event chosen will be removed.
+     *
+     * @throws IOException
+     */
     public void onRemoveEventSubmitButtonClick() throws IOException {
         Event eventSelected = events.get(0);
 

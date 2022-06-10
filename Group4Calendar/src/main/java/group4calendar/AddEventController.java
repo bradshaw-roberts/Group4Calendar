@@ -1,3 +1,19 @@
+/**
+ * Controller for add-event-view.fxml
+ * The user will enter all the information for a new event
+ * and then it will be added to the files.
+ *
+ * CIS-2999 Summer I Semester
+ * Oakland University
+ * Group 4 Calendar
+ *
+ * Brenden Nagey
+ * Ravi Prajapati
+ * Bradshaw Roberts
+ * Nora Sinishtaj
+ * V VanCamp
+ */
+
 package com.group4calendar;
 
 import javafx.fxml.FXML;
@@ -8,8 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
-//test git
 
 public class AddEventController implements Initializable {
 
@@ -33,6 +47,12 @@ public class AddEventController implements Initializable {
         addEventDateInput.setValue(dateToday);
     }
 
+    /**
+     * Get all data from the interface fields and create an Event
+     * object. Then send that object to GetData.
+     *
+     * @throws IOException
+     */
     public void onAddEventSubmitButtonClick () throws IOException {
         String startTime = "";
         String endTime = "";

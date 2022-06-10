@@ -1,3 +1,17 @@
+/**
+ * Controller for the main view or part of the interface, calendar-view.fxml
+ *
+ * CIS-2999 Summer I Semester
+ * Oakland University
+ * Group 4 Calendar
+ *
+ * Brenden Nagey
+ * Ravi Prajapati
+ * Bradshaw Roberts
+ * Nora Sinishtaj
+ * V VanCamp
+ */
+
 package com.group4calendar;
 
 import javafx.fxml.FXML;
@@ -71,7 +85,8 @@ public class CalendarController implements Initializable  {
 
 
 
-    //to do list stuff
+    //To Do List stuff
+
     @FXML private TextField toDoListTextField = new TextField();
     @FXML private TableView toDoListTableView = new TableView();
     private static TableView toDoListTableView_;
@@ -79,6 +94,8 @@ public class CalendarController implements Initializable  {
     @FXML private TableColumn<ToDoListItem, String> toDoListTableColumn = new TableColumn<>("Items");
 
     /**
+     * This method will update the table for the to do list on the interface.
+     * It will clear all values and put in every entry from the file.
      *
      * @throws FileNotFoundException
      */
@@ -94,12 +111,24 @@ public class CalendarController implements Initializable  {
         }
     }
 
+    /**
+     * When a popup window is opened it will be created with this stage.
+     * Having one stage for every popup window will make it easier to close.
+     */
     public static Stage newWindow;
 
+    /**
+     * Close the popup window.
+     */
     public static void closeNewWindow() {
         newWindow.close();
     }
 
+    /**
+     * Add new inputted item to the to do list.
+     *
+     * @throws IOException
+     */
     public void onAddToDoButtonClick() throws IOException {
         ToDoList.addItem(toDoListTextField.getText());
 
@@ -108,6 +137,11 @@ public class CalendarController implements Initializable  {
         CalendarController.updateToDoList();
     }
 
+    /**
+     * Remove inputted item to the to do list if it is there.
+     *
+     * @throws IOException
+     */
     public void onRemoveToDoButtonClick() throws IOException {
         ToDoList.removeItem(toDoListTextField.getText());
 
@@ -120,8 +154,12 @@ public class CalendarController implements Initializable  {
 
 
 
-    //calendar stuff
-    //day view
+    //Calendar View stuff
+
+    // Used by Day, Week, and Month View methods
+    private static ArrayList<Event> events = new ArrayList<>();
+
+    //Day View Variables
     @FXML DatePicker dayDatePicker = new DatePicker();
 
     @FXML private TableView dayTableView = new TableView();
@@ -133,9 +171,36 @@ public class CalendarController implements Initializable  {
     @FXML private TableColumn<Event, String> notesDayTableColumn = new TableColumn<>();
     @FXML private TableColumn<Event, String> locationDayTableColumn = new TableColumn<>();
 
-    //week view
+    /**
+     * When ever the date on this view is changed or an event is added, removed, or edited
+     * this method is called to update the interface day view.
+     *
+     * @param date    date that is currently chosen to show
+     * @throws FileNotFoundException
+     */
+    public static void updateDayView(LocalDate date) throws FileNotFoundException {
+
+        ArrayList<Event> events = GetData.getAllEventsForDay(date);
+
+        sortEvents(events);
+
+        for (int i = 0; i < dayTableView_.getItems().size(); i++) {
+            dayTableView_.getItems().clear();
+        }
+
+        for (Event event : events) {
+            dayTableView_.getItems().add(event);
+        }
+    }
+
+
+    //Week View Variables
     @FXML DatePicker weekDatePicker = new DatePicker();
 
+    /**
+     * These 2 ArrayLists are used to hold all the labels the updateWeekView uses
+     * to make using them easier.
+     */
     ArrayList<Label> weekViewLabels = new ArrayList<>();
     ArrayList<Label> weekViewDateLabels = new ArrayList<>();
 
@@ -155,76 +220,12 @@ public class CalendarController implements Initializable  {
     @FXML private Label weekViewFRIDAYDateLabel = new Label();
     @FXML private Label weekViewSATURDAYDateLabel = new Label();
 
-    //month view
-    @FXML ChoiceBox monthChoiceBox = new ChoiceBox<>();
-    @FXML Spinner yearSpinner = new Spinner<>();
-
-    ArrayList<Label> monthViewLabels = new ArrayList<>();
-
-    @FXML private Label week1SUNDAYLabel = new Label();
-    @FXML private Label week1MONDAYLabel = new Label();
-    @FXML private Label week1TUESDAYLabel = new Label();
-    @FXML private Label week1WEDNESDAYLabel = new Label();
-    @FXML private Label week1THURSDAYLabel = new Label();
-    @FXML private Label week1FRIDAYLabel = new Label();
-    @FXML private Label week1SATURDAYLabel = new Label();
-    @FXML private Label week2SUNDAYLabel = new Label();
-    @FXML private Label week2MONDAYLabel = new Label();
-    @FXML private Label week2TUESDAYLabel = new Label();
-    @FXML private Label week2WEDNESDAYLabel = new Label();
-    @FXML private Label week2THURSDAYLabel = new Label();
-    @FXML private Label week2FRIDAYLabel = new Label();
-    @FXML private Label week2SATURDAYLabel = new Label();
-    @FXML private Label week3SUNDAYLabel = new Label();
-    @FXML private Label week3MONDAYLabel = new Label();
-    @FXML private Label week3TUESDAYLabel = new Label();
-    @FXML private Label week3WEDNESDAYLabel = new Label();
-    @FXML private Label week3THURSDAYLabel = new Label();
-    @FXML private Label week3FRIDAYLabel = new Label();
-    @FXML private Label week3SATURDAYLabel = new Label();
-    @FXML private Label week4SUNDAYLabel = new Label();
-    @FXML private Label week4MONDAYLabel = new Label();
-    @FXML private Label week4TUESDAYLabel = new Label();
-    @FXML private Label week4WEDNESDAYLabel = new Label();
-    @FXML private Label week4THURSDAYLabel = new Label();
-    @FXML private Label week4FRIDAYLabel = new Label();
-    @FXML private Label week4SATURDAYLabel = new Label();
-    @FXML private Label week5SUNDAYLabel = new Label();
-    @FXML private Label week5MONDAYLabel = new Label();
-    @FXML private Label week5TUESDAYLabel = new Label();
-    @FXML private Label week5WEDNESDAYLabel = new Label();
-    @FXML private Label week5THURSDAYLabel = new Label();
-    @FXML private Label week5FRIDAYLabel = new Label();
-    @FXML private Label week5SATURDAYLabel = new Label();
-    @FXML private Label week6SUNDAYLabel = new Label();
-    @FXML private Label week6MONDAYLabel = new Label();
-    @FXML private Label week6TUESDAYLabel = new Label();
-    @FXML private Label week6WEDNESDAYLabel = new Label();
-    @FXML private Label week6THURSDAYLabel = new Label();
-    @FXML private Label week6FRIDAYLabel = new Label();
-    @FXML private Label week6SATURDAYLabel = new Label();
-
-    private static ArrayList<Event> events = new ArrayList<>();
-
-
-
-    public static void updateDayView(LocalDate date) throws FileNotFoundException {
-
-        ArrayList<Event> events = GetData.getAllEventsForDay(date);
-
-        sortEvents(events);
-
-        for (int i = 0; i < dayTableView_.getItems().size(); i++) {
-            dayTableView_.getItems().clear();
-        }
-
-        for (Event event : events) {
-            dayTableView_.getItems().add(event);
-        }
-    }
-
-
-
+    /**
+     * When ever the date on this view is changed or an event is added, removed, or edited
+     * this method is called to update the interface week view.
+     *
+     * @throws FileNotFoundException
+     */
     public void updateWeekView() throws FileNotFoundException {
         clearWeekView();
 
@@ -305,6 +306,9 @@ public class CalendarController implements Initializable  {
         }
     }
 
+    /**
+     * Add all the Labels used in the week view to the weekViewLabels ArrayList
+     */
     public void setUpWeekViewLabelsArrayList() {
         weekViewLabels.add(weekViewSUNDAYLabel);
         weekViewLabels.add(weekViewMONDAYLabel);
@@ -323,6 +327,9 @@ public class CalendarController implements Initializable  {
         weekViewDateLabels.add(weekViewSATURDAYDateLabel);
     }
 
+    /**
+     * Clear all text out of the week view labels.
+     */
     public void clearWeekView() {
         for (Label label : weekViewLabels) {
             label.setText("");
@@ -333,6 +340,65 @@ public class CalendarController implements Initializable  {
     }
 
 
+    //Month View Variables
+    @FXML ChoiceBox monthChoiceBox = new ChoiceBox<>();
+    @FXML Spinner yearSpinner = new Spinner<>();
+
+    /**
+     * This ArrayList are used to hold all the labels the updateMonthView uses
+     * to make using them easier.
+     */
+    ArrayList<Label> monthViewLabels = new ArrayList<>();
+
+    @FXML private Label week1SUNDAYLabel = new Label();
+    @FXML private Label week1MONDAYLabel = new Label();
+    @FXML private Label week1TUESDAYLabel = new Label();
+    @FXML private Label week1WEDNESDAYLabel = new Label();
+    @FXML private Label week1THURSDAYLabel = new Label();
+    @FXML private Label week1FRIDAYLabel = new Label();
+    @FXML private Label week1SATURDAYLabel = new Label();
+    @FXML private Label week2SUNDAYLabel = new Label();
+    @FXML private Label week2MONDAYLabel = new Label();
+    @FXML private Label week2TUESDAYLabel = new Label();
+    @FXML private Label week2WEDNESDAYLabel = new Label();
+    @FXML private Label week2THURSDAYLabel = new Label();
+    @FXML private Label week2FRIDAYLabel = new Label();
+    @FXML private Label week2SATURDAYLabel = new Label();
+    @FXML private Label week3SUNDAYLabel = new Label();
+    @FXML private Label week3MONDAYLabel = new Label();
+    @FXML private Label week3TUESDAYLabel = new Label();
+    @FXML private Label week3WEDNESDAYLabel = new Label();
+    @FXML private Label week3THURSDAYLabel = new Label();
+    @FXML private Label week3FRIDAYLabel = new Label();
+    @FXML private Label week3SATURDAYLabel = new Label();
+    @FXML private Label week4SUNDAYLabel = new Label();
+    @FXML private Label week4MONDAYLabel = new Label();
+    @FXML private Label week4TUESDAYLabel = new Label();
+    @FXML private Label week4WEDNESDAYLabel = new Label();
+    @FXML private Label week4THURSDAYLabel = new Label();
+    @FXML private Label week4FRIDAYLabel = new Label();
+    @FXML private Label week4SATURDAYLabel = new Label();
+    @FXML private Label week5SUNDAYLabel = new Label();
+    @FXML private Label week5MONDAYLabel = new Label();
+    @FXML private Label week5TUESDAYLabel = new Label();
+    @FXML private Label week5WEDNESDAYLabel = new Label();
+    @FXML private Label week5THURSDAYLabel = new Label();
+    @FXML private Label week5FRIDAYLabel = new Label();
+    @FXML private Label week5SATURDAYLabel = new Label();
+    @FXML private Label week6SUNDAYLabel = new Label();
+    @FXML private Label week6MONDAYLabel = new Label();
+    @FXML private Label week6TUESDAYLabel = new Label();
+    @FXML private Label week6WEDNESDAYLabel = new Label();
+    @FXML private Label week6THURSDAYLabel = new Label();
+    @FXML private Label week6FRIDAYLabel = new Label();
+    @FXML private Label week6SATURDAYLabel = new Label();
+
+    /**
+     * When ever the date on this view is changed or an event is added, removed, or edited
+     * this method is called to update the interface month view.
+     *
+     * @throws FileNotFoundException
+     */
     public void updateMonthView() throws FileNotFoundException {
         clearMonthView();
 
@@ -357,10 +423,9 @@ public class CalendarController implements Initializable  {
         }
     }
 
-    public void monthPicked() throws FileNotFoundException {
-        updateMonthView();
-    }
-
+    /**
+     * Add all the Labels used in the month view to the monthViewLabels ArrayList
+     */
     public void setUpMonthViewLabelsArrayList() {
         monthViewLabels.add(week1SUNDAYLabel);
         monthViewLabels.add(week1MONDAYLabel);
@@ -406,12 +471,22 @@ public class CalendarController implements Initializable  {
         monthViewLabels.add(week6SATURDAYLabel);
     }
 
+    /**
+     * Clear all text out of the week view labels.
+     */
     public void clearMonthView() {
         for (Label label : monthViewLabels) {
             label.setText("");
         }
     }
 
+    /**
+     * Given a month string, return the corisponding number.
+     * ex: MAY return 5
+     *
+     * @param monthString
+     * @return int
+     */
     public int monthStringToInt(String monthString) {
         int monthInt = 0;
         switch (monthString) {
@@ -457,6 +532,13 @@ public class CalendarController implements Initializable  {
         return monthInt;
     }
 
+    /**
+     * Given a day of the week as a string return the number of the day starting
+     * at sunday being 1 and ascending in order to saturday being 7.
+     *
+     * @param dayString
+     * @return int
+     */
     public int dayOfWeekStringToInt(String dayString) {
         int dayInt = 0;
         switch (dayString) {
@@ -487,6 +569,11 @@ public class CalendarController implements Initializable  {
     }
 
 
+    /**
+     * Call the methods to update the day, week, and month views.
+     *
+     * @throws FileNotFoundException
+     */
     public void updateAllViews() throws FileNotFoundException {
         dayDisplayDate = dayDatePicker.getValue();
         updateDayView(dayDisplayDate);
@@ -495,12 +582,23 @@ public class CalendarController implements Initializable  {
     }
 
 
-
+    /**
+     * Sort all inputted events by start time using merge sort.
+     *
+     * @param events   ArrayList of Event objects
+     */
     public static void sortEvents (ArrayList<Event> events) {
         //sortEventsByDate(events);
         sortEventsByStartTime(events, 0, events.size() - 1);
     }
 
+    /**
+     * Merge sort to sort all Event objects by their start time.
+     *
+     * @param events
+     * @param begin
+     * @param end
+     */
     private static void sortEventsByStartTime(ArrayList<Event> events, int begin, int end) {
         if (begin >= end) {return;}
         int middle = (begin + end) / 2;
@@ -509,6 +607,14 @@ public class CalendarController implements Initializable  {
         sortEventsByStartTimeMergeHalves(events, begin, middle, end);
     }
 
+    /**
+     * Merging the different halves from teh merge sort.
+     *
+     * @param events
+     * @param left
+     * @param middle
+     * @param right
+     */
     private static void sortEventsByStartTimeMergeHalves(ArrayList<Event> events, int left, int middle, int right) {
         int subArrayOne = middle - left + 1;
         int subArrayTwo = right - middle;
@@ -560,7 +666,13 @@ public class CalendarController implements Initializable  {
     }
 
 
-
+    /**
+     * Called when the user clicked the button labeled 'Add' and located under the calendar view.
+     * Created popup for the add event menu allowing the user to create new events. Loads
+     * add-event-view.fxml.
+     *
+     * @throws IOException
+     */
     public void onAddEventButtonClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("add-event-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 728, 350);
@@ -575,6 +687,13 @@ public class CalendarController implements Initializable  {
         newWindow.show();
     }
 
+    /**
+     * Called when the user clicked the button labeled 'Edit' and located under the calendar view.
+     * Created popup for the edit event menu allowing the user to edit existing events. Loads
+     * edit-event-view.fxml.
+     *
+     * @throws IOException
+     */
     public void onEditEventButtonClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("edit-event-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 728, 376);
@@ -589,6 +708,13 @@ public class CalendarController implements Initializable  {
         newWindow.show();
     }
 
+    /**
+     * Called when the user clicked the button labeled 'Remove' and located under the calendar view.
+     * Created popup for the remove event menu allowing the user to remove existing events. Loads
+     * remove-event-view.fxml.
+     *
+     * @throws IOException
+     */
     public void onRemoveEventButtonClick() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("remove-event-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 501, 183);
@@ -603,11 +729,23 @@ public class CalendarController implements Initializable  {
         newWindow.show();
     }
 
+    /**
+     * When a new date has been selected this will be called and update the day view
+     * to show the new selected date.
+     *
+     * @throws FileNotFoundException
+     */
     public void dayViewDatePicked() throws FileNotFoundException {
         dayDisplayDate = dayDatePicker.getValue();
         updateDayView(dayDisplayDate);
     }
 
+    /**
+     * When a new date has been selected this will be called and update the week view
+     * to show the new selected date.
+     *
+     * @throws FileNotFoundException
+     */
     public void weekViewDatePicked() throws FileNotFoundException {
         updateWeekView();
     }

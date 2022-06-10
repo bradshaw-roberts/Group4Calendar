@@ -1,3 +1,18 @@
+/**
+ * This class is used to add, remove, edit, and get event data from the files they are stored on.
+ * Each file holds all events for a single day and are titled by their data, 2022-05-26.txt.
+ *
+ * CIS-2999 Summer I Semester
+ * Oakland University
+ * Group 4 Calendar
+ *
+ * Brenden Nagey
+ * Ravi Prajapati
+ * Bradshaw Roberts
+ * Nora Sinishtaj
+ * V VanCamp
+ */
+
 package com.group4calendar;
 
 import java.io.*;
@@ -7,12 +22,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GetData {
-    //read and write to the files
-
-    //basic layout of what methods we need in this java file, can be changed
-
+    /**
+     * Add Event object to the file of the same date. If there is no file, create one.
+     *
+     * @param event
+     * @throws IOException
+     */
     public static void addEvent(Event event) throws IOException {
-        //add the new event to the file
         BufferedWriter listWriter = new BufferedWriter(new FileWriter(new File("src/main/resources/EventsDataFiles/" + event.getDate() + ".txt"), true));
 
         listWriter.append("\n" + "----------\n" + event.toStringForFile());
@@ -20,9 +36,14 @@ public class GetData {
         listWriter.close();
     }
 
+    /**
+     * Remove Event object to the file of the same date. There will not be a situation
+     * where an event is not in the files because of how the interface works.
+     *
+     * @param event
+     * @throws IOException
+     */
     public static void removeEvent(Event event) throws IOException {
-        //remove the old event from the file
-
         File importFile = new File("src/main/resources/EventsDataFiles/" + event.getDate() + ".txt");
         if(!importFile.isFile()){
             System.out.println(event.getDate() + ".txt does not exist");
@@ -78,19 +99,25 @@ public class GetData {
         Files.delete(tempFile.toPath());
     }
 
+    /**
+     * Remove the old, unedited event and add the new, edited event using both removeEvent()
+     * and addEvent().
+     *
+     * @param oldEvent  the event before it was changed
+     * @param newEvent  the event after it was changed
+     * @throws IOException
+     */
     public static void editEvent(Event oldEvent, Event newEvent) throws IOException {
-        //this will call addEvent and send it the newEvent
-        //also call removeEvent and send it the oldEvent
-
         removeEvent(oldEvent);
         addEvent(newEvent);
     }
 
     /**
-     * dfnoawokdnfldnlmf s
+     * Gets the date of the events needed, gets every event in the file of the given date, and
+     * turns them into Event objects then returns them in an ArrayList.
      *
-     * @param date     date of the day we are trying to get events for
-     * @return     return ArrayList of Event objects
+     * @param date
+     * @return   ArrayList of event objects
      * @throws FileNotFoundException
      */
     public static ArrayList<Event> getAllEventsForDay(LocalDate date) throws FileNotFoundException {

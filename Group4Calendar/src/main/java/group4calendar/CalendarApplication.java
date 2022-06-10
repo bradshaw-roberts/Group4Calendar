@@ -1,3 +1,17 @@
+/**
+ * To run the application call main().
+ *
+ * CIS-2999 Summer I Semester
+ * Oakland University
+ * Group 4 Calendar
+ *
+ * Brenden Nagey
+ * Ravi Prajapati
+ * Bradshaw Roberts
+ * Nora Sinishtaj
+ * V VanCamp
+ */
+
 package com.group4calendar;
 
 import javafx.application.Application;

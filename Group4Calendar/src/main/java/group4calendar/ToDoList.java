@@ -1,3 +1,17 @@
+/**
+ * Get, add, and remove items from the To Do List.
+ *
+ * CIS-2999 Summer I Semester
+ * Oakland University
+ * Group 4 Calendar
+ *
+ * Brenden Nagey
+ * Ravi Prajapati
+ * Bradshaw Roberts
+ * Nora Sinishtaj
+ * V VanCamp
+ */
+
 package com.group4calendar;
 
 import java.io.*;
@@ -7,6 +21,13 @@ import java.util.Scanner;
 
 public class ToDoList {
 
+    /**
+     * Get all items or lines from the file and put them individually as Strings
+     * into an ArrayList and return that ArrayList.
+     *
+     * @return  ArrayList of Strings
+     * @throws FileNotFoundException
+     */
     public static ArrayList getAll() throws FileNotFoundException {
         //return all items from the file in an ArrayList
 
@@ -22,6 +43,12 @@ public class ToDoList {
         return items;
     }
 
+    /**
+     * Add given String to the file.
+     *
+     * @param name
+     * @throws IOException
+     */
     public static void addItem(String name) throws IOException {
         //given the name of the new to do list item add it to the file.
 
@@ -32,6 +59,12 @@ public class ToDoList {
         listWriter.close();
     }
 
+    /**
+     * Given a String, if that string is in the file remove it.
+     *
+     * @param name
+     * @throws IOException
+     */
     public static void removeItem(String name) throws IOException {
         //given a string see if the item is in the file and if it is, remove it.
 
