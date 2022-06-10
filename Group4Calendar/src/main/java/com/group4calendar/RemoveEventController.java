@@ -58,9 +58,7 @@ public class RemoveEventController implements Initializable {
             }
         }
 
-        System.out.println(eventSelected.toStringForFile());
-
-        //GetData.removeEvent(eventSelected);
+        GetData.removeEvent(eventSelected);
 
         CalendarController.updateDayView(CalendarController.dayDisplayDate);
 
@@ -68,3 +66,4 @@ public class RemoveEventController implements Initializable {
     }
 
 }
+
