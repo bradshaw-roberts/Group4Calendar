@@ -17,15 +17,23 @@
 package com.group4calendar;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AddEventController implements Initializable {
+
+    public static Stage popUp;
 
     @FXML private ChoiceBox addEventStartTimeAMPMChoiceBox = new ChoiceBox();
     @FXML private ChoiceBox addEventEndTimeAMPMChoiceBox = new ChoiceBox();
@@ -54,8 +62,18 @@ public class AddEventController implements Initializable {
      * @throws IOException
      */
     public void onAddEventSubmitButtonClick () throws IOException {
+        /* get current date and time and set the title to it.
+        If the user does not input a date that the current date and time
+        will be the title of the event. That was no repeating titles.
+         */
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+        Date tempTitleDate = new Date(System.currentTimeMillis());
+
+        String title = formatter.format(tempTitleDate);
         String startTime = "";
         String endTime = "";
+        String location = "N/A";
+        String notes = "N/A";
 
         // convert the start time input to string for Event object
         if (addEventStartTimeHourSpinner.getValue() == 12) {
@@ -73,7 +91,6 @@ public class AddEventController implements Initializable {
         }
 
         startTime += " " + addEventStartTimeAMPMChoiceBox.getValue();
-
         // convert the end time input to string for Event object
         if (addEventEndTimeHourSpinner.getValue() == 12) {
             endTime += addEventEndTimeHourSpinner.getValue();
@@ -91,12 +108,58 @@ public class AddEventController implements Initializable {
 
         endTime += " " + addEventEndTimeAMPMChoiceBox.getValue();
 
-        Event event = new Event(addEventTitleTextField.getText(), addEventDateInput.getValue().toString(), addEventDateInput.getValue().getDayOfWeek().toString(), startTime, endTime, addEventLocationTextField.getText(), addEventNotesTextArea.getText());
+        if (addEventNotesTextArea.getText().equals("")) {
+            System.out.println("null");
+        }
 
-        GetData.addEvent(event);
+        if (!addEventTitleTextField.getText().equals("")) {
+            title = addEventTitleTextField.getText();
+        }
 
-        CalendarController.updateDayView(CalendarController.dayDisplayDate);
+        if (!addEventLocationTextField.getText().equals("")) {
+            location = addEventLocationTextField.getText();
+        }
 
-        CalendarController.closeNewWindow();
+        if (!addEventNotesTextArea.getText().equals("")) {
+            notes = addEventNotesTextArea.getText();
+        }
+
+        Event newEvent = new Event(title, addEventDateInput.getValue().toString(), addEventDateInput.getValue().getDayOfWeek().toString(), startTime, endTime, location, notes);
+
+        // If there is an event with the same title for this date do not create the event.
+        ArrayList<Event> events = GetData.getAllEventsForDay(addEventDateInput.getValue());
+        boolean eventTitleExists = false;
+
+        for (Event existingEvent : events) {
+            if (existingEvent.getTitle().equals(newEvent.getTitle())) {
+                eventTitleExists = true;
+            }
+        }
+
+        if (eventTitleExists) {
+            FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("same-title-pop-up-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 482, 166);
+
+            popUp = new Stage();
+            popUp.setTitle("Error");
+            popUp.setScene(scene);
+
+            popUp.setX(600);
+            popUp.setY(350);
+
+            popUp.show();
+        } else {
+            GetData.addEvent(newEvent);
+
+            CalendarController.updateDayView(CalendarController.dayDisplayDate);
+
+            CalendarController.closeNewWindow();
+        }
+
+    }
+
+    public static void closePopUp() {
+        popUp.close();
     }
 }
+

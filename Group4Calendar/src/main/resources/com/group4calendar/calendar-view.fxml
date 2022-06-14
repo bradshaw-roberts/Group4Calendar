@@ -25,9 +25,9 @@
 
 <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="644.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group4calendar.CalendarController">
    <children>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="644.0" prefWidth="1110.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="1110.0">
          <children>
-            <SplitPane dividerPositions="0.763167388167388" prefHeight="644.0" prefWidth="1110.0">
+            <SplitPane dividerPositions="0.763167388167388" prefHeight="654.0" prefWidth="1110.0">
               <items>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -190,7 +190,7 @@
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <ChoiceBox fx:id="monthChoiceBox" layoutX="266.0" layoutY="8.0" onAction="#monthPicked" prefWidth="150.0">
+                                          <ChoiceBox fx:id="monthChoiceBox" layoutX="266.0" layoutY="8.0" onAction="#updateMonthView" prefWidth="150.0">
                                                <items>
                                                    <FXCollections fx:factory="observableArrayList">
                                                        <String fx:value="JANUARY" />

@@ -50,6 +50,8 @@ public class EditEventController implements Initializable {
 
     @FXML private DatePicker editEventDateInput = new DatePicker();
 
+    @FXML private Button editEventSubmitButton = new Button();
+
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         LocalDate dateToday = LocalDate.now();
 
@@ -77,6 +79,10 @@ public class EditEventController implements Initializable {
         for (Event event : events) {
             editEventTitleChoiceBox.getItems().add(event.getTitle());
         }
+
+        editEventLocationTextField.setText("");
+        editEventNotesTextArea.setText("");
+        editEventTitleChoiceBox.setValue("");
     }
 
     public void editEventDatePicked() throws FileNotFoundException {
@@ -90,6 +96,8 @@ public class EditEventController implements Initializable {
      * @throws FileNotFoundException
      */
     public void editEventTitleChoiceBoxSelected() {
+        editEventSubmitButton.setDisable(false);
+
         Event eventSelected = events.get(0);
 
         for (Event event : events) {
@@ -98,16 +106,14 @@ public class EditEventController implements Initializable {
             }
         }
 
-        editEventTitleChoiceBox.setValue(eventSelected.getTitle());
 
-//        editEventLocationTextField.setText(eventSelected.getLocation());
-//        editEventNotesTextArea.setText(eventSelected.getNotes());
-//        editEventStartTimeMinSpinner.
-//                editEventStartTimeMinSpinner
-//
-//        editEventStartTimeAMPMChoiceBox.setValue(eventSelected.get);
-//                editEventEndTimeAMPMChoiceBox
-
+        if (eventSelected.getTitle().equals("No Events Today")) {
+            editEventSubmitButton.setDisable(true);
+        } else {
+            editEventTitleChoiceBox.setValue(eventSelected.getTitle());
+            editEventLocationTextField.setText(eventSelected.getLocation());
+            editEventNotesTextArea.setText(eventSelected.getNotes());
+        }
     }
 
     /**
@@ -119,6 +125,8 @@ public class EditEventController implements Initializable {
     public void onEditEventSubmitButtonClick () throws IOException {
         String startTime = "";
         String endTime = "";
+        String location = "N/A";
+        String notes = "N/A";
 
         // convert the start time input to string for Event object
         if (editEventStartTimeHourSpinner.getValue() == 12) {
@@ -154,7 +162,15 @@ public class EditEventController implements Initializable {
 
         endTime += " " + editEventEndTimeAMPMChoiceBox.getValue();
 
-        Event newEvent = new Event(editEventTitleChoiceBox.getValue().toString(), editEventDateInput.getValue().toString(), editEventDateInput.getValue().getDayOfWeek().toString(), startTime, endTime, editEventLocationTextField.getText(), editEventNotesTextArea.getText());
+        if (!editEventLocationTextField.getText().equals("")) {
+            location = editEventLocationTextField.getText();
+        }
+
+        if (!editEventNotesTextArea.getText().equals("")) {
+            notes = editEventNotesTextArea.getText();
+        }
+
+        Event newEvent = new Event(editEventTitleChoiceBox.getValue().toString(), editEventDateInput.getValue().toString(), editEventDateInput.getValue().getDayOfWeek().toString(), startTime, endTime, location, notes);
 
         Event oldEvent = events.get(0);
 

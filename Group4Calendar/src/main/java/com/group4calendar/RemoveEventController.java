@@ -39,6 +39,8 @@ public class RemoveEventController implements Initializable {
 
     @FXML private DatePicker removeEventDatePicker = new DatePicker();
 
+    @FXML private Button removeEventSubmitButton = new Button();
+
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
         LocalDate dateToday = LocalDate.now();
 
@@ -59,12 +61,17 @@ public class RemoveEventController implements Initializable {
      * @throws FileNotFoundException
      */
     public void dateChanged(LocalDate date) throws FileNotFoundException {
+        removeEventSubmitButton.setDisable(false);
+
         events = GetData.getAllEventsForDay(date);
 
         removeEventTitleChoiceBox.getItems().clear();
 
         for (Event event : events) {
             removeEventTitleChoiceBox.getItems().add(event.getTitle());
+            if (event.getTitle().equals("No Events Today")) {
+                removeEventSubmitButton.setDisable(true);
+            }
         }
 
         removeEventTitleChoiceBox.setValue(events.get(0).getTitle());
@@ -101,4 +108,3 @@ public class RemoveEventController implements Initializable {
     }
 
 }
-

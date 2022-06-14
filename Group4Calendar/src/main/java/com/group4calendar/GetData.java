@@ -65,7 +65,7 @@ public class GetData {
                 currentLine = br.readLine();
                 trimmedLine = currentLine.trim();
                 if (trimmedLine.equals(event.getTitle())) {
-                    for (int i = 0; i < 7; i++) {
+                    for (int i = 0; i < 5; i++) {
                         br.readLine();
                     }
                 } else {

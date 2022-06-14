@@ -107,7 +107,9 @@ public class CalendarController implements Initializable  {
         }
 
         for (String item : currentToDoListItems) {
-            toDoListTableView_.getItems().add(new ToDoListItem(item));
+            if (!item.equals("")) {
+                toDoListTableView_.getItems().add(new ToDoListItem(item));
+            }
         }
     }
 
@@ -116,12 +118,16 @@ public class CalendarController implements Initializable  {
      * Having one stage for every popup window will make it easier to close.
      */
     public static Stage newWindow;
+    public static Stage error;
 
     /**
      * Close the popup window.
      */
     public static void closeNewWindow() {
         newWindow.close();
+    }
+    public static void closeError() {
+        error.close();
     }
 
     /**
@@ -130,11 +136,37 @@ public class CalendarController implements Initializable  {
      * @throws IOException
      */
     public void onAddToDoButtonClick() throws IOException {
-        ToDoList.addItem(toDoListTextField.getText());
+        if (!toDoListTextField.getText().equals("")) {
+            ArrayList<String> items = ToDoList.getAll();
+            boolean itemTitleExists = false;
 
-        toDoListTextField.clear();
+            for (String item : items) {
+                if (item.equals(toDoListTextField.getText())) {
+                    itemTitleExists = true;
+                }
+            }
 
-        CalendarController.updateToDoList();
+            if (itemTitleExists) {
+                FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("same-item-pop-up-view.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 482, 166);
+
+                error = new Stage();
+                error.setTitle("Error");
+                error.setScene(scene);
+
+                error.setX(600);
+                error.setY(350);
+
+                error.show();
+            } else {
+                ToDoList.addItem(toDoListTextField.getText());
+
+                toDoListTextField.clear();
+
+                CalendarController.updateToDoList();
+
+            }
+        }
     }
 
     /**
@@ -143,11 +175,13 @@ public class CalendarController implements Initializable  {
      * @throws IOException
      */
     public void onRemoveToDoButtonClick() throws IOException {
-        ToDoList.removeItem(toDoListTextField.getText());
+        if (!toDoListTextField.getText().equals("")) {
+            ToDoList.removeItem(toDoListTextField.getText());
 
-        toDoListTextField.clear();
+            toDoListTextField.clear();
 
-        CalendarController.updateToDoList();
+            CalendarController.updateToDoList();
+        }
     }
 
 
@@ -720,7 +754,7 @@ public class CalendarController implements Initializable  {
         Scene scene = new Scene(fxmlLoader.load(), 501, 183);
 
         newWindow = new Stage();
-        newWindow.setTitle("Edit Event");
+        newWindow.setTitle("Remove Event");
         newWindow.setScene(scene);
 
         newWindow.setX(500);
