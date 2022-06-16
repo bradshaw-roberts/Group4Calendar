@@ -25,7 +25,7 @@ public class CalendarApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CalendarApplication.class.getResource("calendar-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1110, 654);
+        Scene scene = new Scene(fxmlLoader.load(), 1273, 654);
         stage.setTitle("Calendar");
         stage.setScene(scene);
         stage.show();

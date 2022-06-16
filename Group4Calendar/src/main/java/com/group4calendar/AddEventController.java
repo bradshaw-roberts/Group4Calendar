@@ -108,9 +108,6 @@ public class AddEventController implements Initializable {
 
         endTime += " " + addEventEndTimeAMPMChoiceBox.getValue();
 
-        if (addEventNotesTextArea.getText().equals("")) {
-            System.out.println("null");
-        }
 
         if (!addEventTitleTextField.getText().equals("")) {
             title = addEventTitleTextField.getText();
@@ -162,4 +159,3 @@ public class AddEventController implements Initializable {
         popUp.close();
     }
 }
-
